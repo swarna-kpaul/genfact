@@ -32,3 +32,11 @@ def generate_counterfactuals(data_df,targetclass_idx,model,featuredtype, clustsi
 			break
 	return (factuals,counterfactuals,factclass,cfactclass)
 	
+
+def evaluate_counterfactuals(facts,cfacts,factclass,cfactclass)
+	cfsamplclass=[str((i,j)) for i,j in zip (factclass,cfactclass)]
+	classfraction=np.unique(cfsamplclass, return_counts=True)[1]/len(cfsamplclass)
+	fitness = []
+	for facts, cfacts in zip(factuals,counterfactuals):
+		fitness.append(np.linalg.norm(facts-cfacts))
+	return (entropy(classfraction,base=10), np.mean(fitness))
