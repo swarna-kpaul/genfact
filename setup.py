@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="genfact",
-    version="0.0.8",
+    version="1.0",
     author="Swarna Kamal Paul",
     author_email="swarna.kpaul@gmail.com",
     description="A model agnostic and gradient-free optimization method for generating counterfactuals",

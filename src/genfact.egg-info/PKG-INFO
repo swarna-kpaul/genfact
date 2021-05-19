@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: genfact
-Version: 0.0.8
+Version: 1.0
 Summary: A model agnostic and gradient-free optimization method for generating counterfactuals
 Home-page: https://github.com/swarna-kpaul/genfact
 Author: Swarna Kamal Paul
