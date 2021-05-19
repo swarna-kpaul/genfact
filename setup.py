@@ -4,8 +4,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="genfact-swarna.kpaul",
-    version="0.0.1",
+    name="genfact",
+    version="0.0.8",
     author="Swarna Kamal Paul",
     author_email="swarna.kpaul@gmail.com",
     description="A model agnostic and gradient-free optimization method for generating counterfactuals",
@@ -24,5 +24,7 @@ setuptools.setup(
     packages=setuptools.find_packages(where="src"),
     python_requires=">=3.6",
 	keywords = ['counterfactual', 'genetic algorithm', 'genfact'],
-	install_requires=[ 'sklearn','pkg_resources','pandas','pickle','logging','scipy','numpy','random'],
+	install_requires=[ 'sklearn','pandas','scipy','numpy'],
+	include_package_data=True,
+    package_data={'': ['data/*.csv']},
 )

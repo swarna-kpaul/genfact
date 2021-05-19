@@ -1,0 +1,12 @@
+LICENSE
+README.md
+pyproject.toml
+setup.cfg
+setup.py
+src/genfact/__init__.py
+src/genfact/util.py
+src/genfact.egg-info/PKG-INFO
+src/genfact.egg-info/SOURCES.txt
+src/genfact.egg-info/dependency_links.txt
+src/genfact.egg-info/requires.txt
+src/genfact.egg-info/top_level.txt
