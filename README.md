@@ -1,6 +1,7 @@
 # Genfact
 ## _A fast counterfactual generator for Causal analysis_
 
+[![DOI](https://zenodo.org/badge/368590702.svg)](https://zenodo.org/badge/latestdoi/368590702)
 
 
 ## Background
