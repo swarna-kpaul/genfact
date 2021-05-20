@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: genfact
-Version: 1.0
+Version: 1.1
 Summary: A model agnostic and gradient-free optimization method for generating counterfactuals
 Home-page: https://github.com/swarna-kpaul/genfact
 Author: Swarna Kamal Paul
@@ -10,10 +10,11 @@ Project-URL: Bug Tracker, https://github.com/swarna-kpaul/genfact/issues
 Description: # Genfact
         ## _A fast counterfactual generator for Causal analysis_
         
+        [![DOI](https://zenodo.org/badge/368590702.svg)](https://zenodo.org/badge/latestdoi/368590702)
         
         
         ## Background
-        Counterfactual examples are samples which are minimally modified with respect to the original sample to alter the predicted value by a model. Thus, counterfactual explanations provide statements as smallest changes required to alter certain predicted value or decision and it proves to be quite useful in finding causal relationships in data. _Genfact_ is a model agnostic and gradient-free optimization method for generating counterfactuals. It can generate multiple counterfactuals at once and can-do amortized inference, thus making the process fast. Given a dataset it can find counterfactuals pairs closest to each other and the pairs may not exist in the original dataset. This feature is useful in this context as the given dataset used for generating counterfactuals may not contain enough samples around the classification boundary, but _Genfact_ can generate samples around the boundary.
+        Counterfactual examples are samples which are minimally modified with respect to the original sample to alter the predicted value by a model. Thus, counterfactual explanations provide statements as smallest changes required to alter certain predicted value or decision and it proves to be quite useful in finding causal relationships in data. _Genfact_ is a model agnostic and gradient-free optimization method for generating counterfactuals. It can generate multiple counterfactuals at once and can-do amortized inference, thus making the process fast. Given a dataset it can find counterfactuals pairs closest to each other and the pairs may not exist in the original dataset. This feature is useful in this context as the given dataset used for generating counterfactuals may not contain enough samples around the classification boundary, but _Genfact_ can generate samples around the boundary. Reference paper can be found [here](https://www.researchgate.net/publication/351697701_Counterfactual_causal_analysis_on_structured_data).
         
         ## Features
         
@@ -42,9 +43,10 @@ Description: # Genfact
         
         To generate counterfactuals run the following function
         ```Python
-        factuals,counterfactuals,factclass,cfactclass,classdistribution = gf.generate_counterfactuals(data_df,dtype,targetclass_idx, C=15, clustsize = 20, datafraction = 0.4, maxiterations = 10)
+        factuals,counterfactuals,factclass,cfactclass,classdistribution = gf.generate_counterfactuals(data_df,dtype,targetclass_idx, model=None, C=15, clustsize = 20, datafraction = 0.4, maxiterations = 10)
         ```
         **Hyperparameters**
+        - model represents the predictive model for featuredata and classdata. If None is supplied a Random forest model is trained
         - C represents the number of classes the target variable will be divided if it is a continous one. Please note If duplicates are present the actual number of buckets formed will be lesser than C.
         - clustsize represents number of clusters to be generated using the feature data.
         - datafraction represents the fraction of data that will be processed to generate counterfactuals

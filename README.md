@@ -34,9 +34,10 @@ import genfact as gf
 
 To generate counterfactuals run the following function
 ```Python
-factuals,counterfactuals,factclass,cfactclass,classdistribution = gf.generate_counterfactuals(data_df,dtype,targetclass_idx, C=15, clustsize = 20, datafraction = 0.4, maxiterations = 10)
+factuals,counterfactuals,factclass,cfactclass,classdistribution = gf.generate_counterfactuals(data_df,dtype,targetclass_idx, model=None, C=15, clustsize = 20, datafraction = 0.4, maxiterations = 10)
 ```
 **Hyperparameters**
+- model represents the predictive model for featuredata and classdata. If None is supplied a Random forest model is trained
 - C represents the number of classes the target variable will be divided if it is a continous one. Please note If duplicates are present the actual number of buckets formed will be lesser than C.
 - clustsize represents number of clusters to be generated using the feature data.
 - datafraction represents the fraction of data that will be processed to generate counterfactuals

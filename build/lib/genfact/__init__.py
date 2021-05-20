@@ -7,7 +7,7 @@ logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 """Author: Swarna Kamal Paul"""
 """email: swarna.kpaul@gmail.com"""
 
-def generate_counterfactuals(data_df,dtype,targetclass_idx, C=15, clustsize = 20, datafraction = 0.4, maxiterations = 10):
+def generate_counterfactuals(data_df,dtype,targetclass_idx, model=None, C=15, clustsize = 20, datafraction = 0.4, maxiterations = 10):
 	
 	###### Prepare data #############
 	"""
@@ -30,11 +30,12 @@ def generate_counterfactuals(data_df,dtype,targetclass_idx, C=15, clustsize = 20
 	featuredata = data_df.iloc[:, :].values
 	dtype.pop(targetclass_idx)
 	logging.info('Data preparation Complete! Got '+str(len(set(classdata)))+" unique classes!")
+	if model == None:
 	######## generate Randomforest prediction model ################
-	logging.info('Training Random Forest model with max depth 10...')
-	model = RandomForestClassifier(max_depth=10, random_state=0)
-	model.fit(featuredata, classdata)
-	logging.info('Model training complete!')
+		logging.info('Training Random Forest model with max depth 10...')
+		model = RandomForestClassifier(max_depth=10, random_state=0)
+		model.fit(featuredata, classdata)
+		logging.info('Model training complete!')
 	logging.info('Clustering feature data...')
 	classdata = model.predict(featuredata)
 	####### create sorted clusters 
