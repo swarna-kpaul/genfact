@@ -57,7 +57,11 @@ def crossover(population,classdata,model,dtype,offspringsize):
 			offspring[f1] = pickle.loads(pickle.dumps((p2[f1] + p1[f1])/2,-1))
 		if str(offspring) in [str(i) for i in population]:
 			continue
-		classdata = np.concatenate([classdata,model.predict([offspring])],axis = 0)
+		
+		try:
+			classdata = np.concatenate([classdata,model.predict([offspring])],axis = 0)
+		except Exception as TypeError:
+			classdata = np.concatenate([classdata, model.predict(offspring.reshape((1, offspring.shape[0])))], axis=0)
 		population = np.vstack([population,offspring])
 		currsize +=1
 	return (population,classdata)
