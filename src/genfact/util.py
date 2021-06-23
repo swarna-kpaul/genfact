@@ -42,7 +42,9 @@ def create_clusters(featuredata,classdata,clustsize=20):
 def crossover(population,classdata,model,dtype,offspringsize):
 	#random.seed(10)
 	currsize = 0
+	search_time = 0
 	while currsize <= offspringsize:
+		search_time +=1
 		p1_index = random.choice(range(len(population)))
 		p1 = population[p1_index]
 		p1_class = classdata[p1_index]
@@ -55,8 +57,10 @@ def crossover(population,classdata,model,dtype,offspringsize):
 			offspring[f1] = pickle.loads(pickle.dumps(p2[f1],-1))
 		else:
 			offspring[f1] = pickle.loads(pickle.dumps((p2[f1] + p1[f1])/2,-1))
-		if str(offspring) in [str(i) for i in population]:
+		if str(offspring) in [str(i) for i in population] and search_time<=len(population)*2:     
 			continue
+		else:
+			search_time=0 
 		
 		try:
 			classdata = np.concatenate([classdata,model.predict([offspring])],axis = 0)
@@ -99,10 +103,18 @@ def run_genetic(cluster,model,dtype,maxiterations=10):
 	un_class,un_class_dist=np.unique(classdata, return_counts=True)
 	un_class_dist = un_class_dist/len(classdata)
 	class_dist = dict(zip(un_class,un_class_dist))
+	newpopulation=population;newclassdata=classdata;
 	for i in range(maxiterations):
-		population,classdata = crossover(population,classdata,model,dtype,offspringsize=len(population)/2)
+		if len(np.unique(newclassdata)) == 1:
+			break
+		else:
+			population = newpopulation
+			classdata = newclassdata
+		population,classdata = crossover(population,classdata,model,dtype,offspringsize=len(population))
 		fitness,counterfacts,counterfactsclass = evaluatefitness(population,classdata)
 		population,classdata,counterfacts,counterfactsclass = selectbest(fitness,population,classdata,counterfacts,counterfactsclass,populationsize=min(10,len(population)*2)) 
+		newpopulation =np.concatenate((population,np.array(counterfacts)),axis=0)
+		newclassdata = np.array(list(classdata)+list(counterfactsclass))
 	return (population,classdata,counterfacts,counterfactsclass)
 
 
