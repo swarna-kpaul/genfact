@@ -47,7 +47,10 @@ def generate_counterfactuals(data_df,dtype,targetclass_idx, model=None, C=15, cl
 	############## generate factual and counterfactual pairs ############
 	processeddatasize=0
 	factuals = np.array([])
+	cluster_no = 1
 	for score,cluster in sortedclusters:
+		logging.info('Running genetic algo for cluster# '+str(cluster_no)+' having size '+str(len(cluster))+' and having diversity score ' +str(score))
+		cluster_no +=1
 		population,classdata,counterfacts,counterfactsclass = run_genetic(cluster,model=model,dtype=dtype,maxiterations=maxiterations)
 		if factuals.size == 0:
 			factuals = population
