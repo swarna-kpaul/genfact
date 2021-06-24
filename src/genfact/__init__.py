@@ -49,6 +49,8 @@ def generate_counterfactuals(data_df,dtype,targetclass_idx, model=None, C=15, cl
 	factuals = np.array([])
 	cluster_no = 1
 	for score,cluster in sortedclusters:
+		if score <= 0 :
+			continue
 		logging.info('Running genetic algo for cluster# '+str(cluster_no)+' having size '+str(len(cluster))+' and having diversity score ' +str(score))
 		cluster_no +=1
 		population,classdata,counterfacts,counterfactsclass = run_genetic(cluster,model=model,dtype=dtype,maxiterations=maxiterations)
@@ -65,6 +67,19 @@ def generate_counterfactuals(data_df,dtype,targetclass_idx, model=None, C=15, cl
 		processeddatasize += len(cluster)
 		if processeddatasize >= datasize: #len(factuals)>=30:
 			break
+	# #### remove all duplicate factual counterfactual pairs
+	# logging.info('Removing duplicate factual counterfactual pairs ....')
+	# featurelen=factuals.shape[1]
+	# factclass = np.array(factclass)
+	# factclass=factclass[::,np.newaxis]
+	# cfactclass = np.array(cfactclass)
+	# cfactclass=cfactclass[::,np.newaxis]
+	# fulldata=np.concatenate((factuals,counterfactuals,factclass,cfactclass),axis=1)
+	# fulldata=np.unique(fulldata,axis=0)
+	# factuals = fulldata[::,0:featurelen]
+	# counterfactuals = fulldata[::,featurelen:2*featurelen]
+	# factclass=fulldata[::,2*featurelen]	
+	# cfactclass=fulldata[::,2*featurelen+1]
 	logging.info('Genrating counterfactuals complete!')
 	return (factuals,counterfactuals,factclass,cfactclass,classdistribution)
 	
